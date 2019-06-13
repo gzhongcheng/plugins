@@ -173,6 +173,24 @@ static const int SOURCE_GALLERY = 1;
 
 - (void)showPhotoLibrary {
   // No need to check if SourceType is available. It always is.
+    NSString *navTintColorString = [_arguments objectForKey:@"tint_color"];
+    NSString *navTitleColorString = [_arguments objectForKey:@"title_color"];
+    if(navTintColorString) {
+        UIColor *navTintColor = [self colorStringToColor:navTintColorString];
+        if ([_imagePickerController.navigationBar respondsToSelector:@selector(setBarTintColor:)]) {
+            [_imagePickerController.navigationBar setBarTintColor:navTintColor];
+            [_imagePickerController.navigationBar setTranslucent:YES];
+        }else{
+            [_imagePickerController.navigationBar setBackgroundColor:navTintColor];
+        }
+    }
+    if(navTitleColorString) {
+        UIColor *navTitleColor = [self colorStringToColor:navTitleColorString];
+        NSMutableDictionary *attrs = [NSMutableDictionary dictionary];
+        attrs[NSForegroundColorAttributeName] = navTitleColor;
+        [_imagePickerController.navigationBar setTitleTextAttributes:attrs];
+        [_imagePickerController.navigationBar setTintColor:navTitleColor];
+    }
   _imagePickerController.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
   [_viewController presentViewController:_imagePickerController animated:YES completion:nil];
 }

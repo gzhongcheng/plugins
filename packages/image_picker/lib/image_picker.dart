@@ -4,6 +4,7 @@
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -33,6 +34,8 @@ class ImagePicker {
     @required ImageSource source,
     double maxWidth,
     double maxHeight,
+    Color tintColor,
+    Color titleColor,
   }) async {
     assert(source != null);
 
@@ -53,6 +56,8 @@ class ImagePicker {
         'source': source.index,
         'maxWidth': maxWidth,
         'maxHeight': maxHeight,
+        'tint_color': tintColor.toString(),
+        'title_color': titleColor.toString(),
       },
     );
 
@@ -71,6 +76,8 @@ class ImagePicker {
       'pickVideo',
       <String, dynamic>{
         'source': source.index,
+        'tint_color': tintColor.toString(),
+        'title_color': titleColor.toString(),
       },
     );
     return path == null ? null : File(path);
