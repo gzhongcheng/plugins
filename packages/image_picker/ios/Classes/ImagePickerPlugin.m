@@ -171,6 +171,24 @@ static const int SOURCE_GALLERY = 1;
   }
 }
 
+// 将flutter传过来的Color字符串 Color(0xAARRGGBB) 转换成UIColor
+- (UIColor *)colorStringToColor:(NSString *)hexColor{
+    NSRange hRange = [hexColor rangeOfString:@"0x"];
+    hexColor = [hexColor substringWithRange:NSMakeRange(hRange.location+2, 8)];
+    unsigned int red, green, blue, alpha;
+    NSRange range;
+    range.length = 2;
+    range.location = 0;
+    [[NSScanner scannerWithString:[hexColor substringWithRange:range]] scanHexInt:&alpha];
+    range.location = 2;
+    [[NSScanner scannerWithString:[hexColor substringWithRange:range]] scanHexInt:&red];
+    range.location = 4;
+    [[NSScanner scannerWithString:[hexColor substringWithRange:range]] scanHexInt:&green];
+    range.location = 6;
+    [[NSScanner scannerWithString:[hexColor substringWithRange:range]] scanHexInt:&blue];
+    return [UIColor colorWithRed:(float)(red/255.0f) green:(float)(green/255.0f) blue:(float)(blue/255.0f) alpha:(float)(alpha/255.0f)];
+}
+
 - (void)showPhotoLibrary {
   // No need to check if SourceType is available. It always is.
     NSString *navTintColorString = [_arguments objectForKey:@"tint_color"];

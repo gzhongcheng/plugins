@@ -66,6 +66,8 @@ class ImagePicker {
 
   static Future<File> pickVideo({
     @required ImageSource source,
+    Color tintColor,
+    Color titleColor,
   }) async {
     assert(source != null);
 
